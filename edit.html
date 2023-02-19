@@ -25,6 +25,8 @@
       <h2 class="title">Add Items</h2>
       <form id="addForm" class="form-inline mb-3">
         <input type="text" class="form-control mr-2" id="item">
+        <input type="text" class="form-control mr-2" id="discription">
+
         <input type="submit" class="btn btn-dark" value="Submit">
       </form>
       <h2 class="title">Items</h2>
@@ -36,47 +38,69 @@
         </ul>
       </div>
     </div>
-  <script >
+  <script>
     var form = document.getElementById('addForm');
     var itemList = document.getElementById('items');
+    var filter = document.getElementById('filter');
 
-  //form Submit event
-  form.addEventListener('submit', addItem);
+    form.addEventListener('submit', addItem);//form Submit event
+    itemList.addEventListener('click', removeItem);//form delete event
+    filter.addEventListener('keyup', filterItems);//form filter event
 
-  //form delete event
-  itemList.addEventListener('click', removeItem);
 
-  //Add item
-  function addItem(e){
+    //Add item
+    function addItem(e){
     e.preventDefault();
     
     var newItem = document.getElementById('item').value; //get input value
+    var newDis = document.getElementById('discription').value; //get input value
+
     var li = document.createElement('li');//create new li element
     li.className = 'list-group-item';//add class
     li.appendChild(document.createTextNode(newItem));  //Add text node with input value
-
+    li.appendChild(document.createTextNode(" "+newDis));  //Add text node with input value
+ 
     var editBtn = document.createElement('button');//create edit button element
+    
     editBtn.className = 'btn btn-warning btn-sm float-right mx-1'; //add class to edit button 
     editBtn.appendChild(document.createTextNode('Edit'));//Append text node
     li.appendChild(editBtn);//append btn to li
     
     var deleteBtn = document.createElement('button');//create delete button element
+    
     deleteBtn.className = 'btn btn-danger btn-sm float-right delete'; //add class to delete button 
     deleteBtn.appendChild(document.createTextNode('X'));//Append text node
     li.appendChild(deleteBtn);//append btn to li
 
     itemList.appendChild(li);// append li to list
-  }
-//remove item
-function removeItem(e){
-    if(e.target.classList.contains('delete')){
-        if(confirm('Are You Sure?')){
-            var li = e.target.parentElement;
-            itemList.removeChild(li);
-        }
-        
-    }
 }
+    //remove item
+    function removeItem(e){
+      if(e.target.classList.contains('delete')){
+        if(confirm('Are You Sure?')){
+          var li = e.target.parentElement;
+          itemList.removeChild(li);
+        }
+      }
+    }
+    //filter items
+    function filterItems(e){
+      //convert text to lowercase
+      var text = e.target.value.toLowerCase();
+      var items=itemList.getElementsByTagName('li');
+    
+      //convert to an array
+      Array.from(items).forEach(function(item){
+        var itemName = item.firstChild.textContent;
+        var disName = item.childNodes[1].textContent;
+        if ((itemName.toLowerCase().indexOf(text)!=-1)||disName.toLowerCase().indexOf(text)!=-1){
+          item.style.display='block';
+        }
+        else{
+          item.style.display='none';
+        }
+      });
+    }
 </script>
 </body>
 </html>

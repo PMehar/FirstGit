@@ -88,12 +88,9 @@
     var date= document.getElementById('date').value;
     var time = document.getElementById('time').value;
 
-    //Local Storage
-    var Name =localStorage.setItem("name", name);
-    var Email=localStorage.setItem("email", email);
-    var mob_No =localStorage.setItem("phone_no", phone_no);
-    var Date =localStorage.setItem("date", date +" " + time);
-    //var Time =lcalStorage.setItem("time", time );
+    var form={
+        name : name, email:email,phone_no:phone_no,date:date, time:time};
+        localStorage.setItem("form" ,JSON.stringify(form));
     }
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

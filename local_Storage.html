@@ -92,15 +92,23 @@
     var form={
         name : name, email:email,phone_no:phone_no,date:date, time:time
     };
-        oldForm=localStorage.setItem(form.email ,JSON.stringify(form));
+        localStorage.setItem(form.email ,JSON.stringify(form));
         DispUser(form);
     }
     function DispUser(form){
-        const pElement = document.getElementById('list');
-
-        //pElement.innerHTML=pElement.innerHTML+`<li>${form.name}-${form.email}-${form.phone_no}-${form.date}-${form.time}</li>`;
+        var pElement = document.getElementById('list');
         var cElement = document.createElement('li');
         cElement.textContent=form.name+" "+form.email+" "+form.phone_no+" "+form.date+" "+form.time+" ";
+
+        var del = document.createElement('input');
+        del.type='button';
+        del.value='Delete';
+
+        del.onclick = ()=>{
+            localStorage.removeItem(form.email);
+            pElement.removeChild(cElement);
+        }
+        cElement.appendChild(del);
         pElement.appendChild(cElement);
         }
 </script>

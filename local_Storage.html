@@ -104,11 +104,26 @@
         del.type='button';
         del.value='Delete';
 
+        var edit = document.createElement('input');
+        edit.type='button';
+        edit.value='Edit';
+
         del.onclick = ()=>{
             localStorage.removeItem(form.email);
             pElement.removeChild(cElement);
         }
+        edit.onclick = ()=>{
+            localStorage.removeItem(form.email);
+            pElement.removeChild(cElement);
+            document.getElementById('name').value= form.name;
+            document.getElementById('email').value=form.email;
+            document.getElementById('tel').value=from.phone_no;
+            document.getElementById('date').value=form.date;
+            document.getElementById('time').value=form.time;
+        }
         cElement.appendChild(del);
+        cElement.appendChild(edit);
+
         pElement.appendChild(cElement);
         }
 </script>

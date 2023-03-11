@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+   <h1>Promise.all</h1> 
+</body>
+<script>
+    const user =[{Name:"Puja",lastActivityTime:new Date().getTime()}];
+console.log("Before Creating Post 2 , LastActivityTime:"+new Date().getTime());
+
+function updateLastUserActivityTime(){
+    return new Promise((resolve,reject)=>{
+        setTimeout(()=>{
+            user.lastActivityTime = new Date().getTime();
+            const error = false;
+            if(!error){
+                resolve(user.lastActivityTime);
+            }else{
+                reject("ERROR: SOMETHING WENT WRONG");
+            }
+        },2000)
+    });
+};
+function createPost(Name) {
+    return new Promise((resolve, reject) => {
+        setTimeout( () => {
+            user.push(Name);
+            const error=false;
+            if(!error){
+                resolve(user.lastActivityTime);
+            }else{
+                reject("ERROR: SOMETHING WENT WRONG");
+            }
+        }, 1000)
+    }) 
+}
+const getPost = function getPosts(){
+    setTimeout(()=>{
+        let output = '';
+        user.forEach((user)=>{
+            //output+=`${user}`;
+            console.log(user);
+        });
+        //document.body.innerHTML = output;
+    },1000);
+}
+function deletePost(Name){
+    
+    return new Promise( (resolve, reject) => {
+        setTimeout( () => {
+            user.pop();
+            console.log(user);
+            resolve();
+        }, 1000)
+    }) 
+}
+const promise1 =createPost({Name:"Ankita",lastActivityTime:undefined});
+//const promise2 =createPost({Name:"Juhi",lastActivityTime:undefined});
+
+async function fun1(){
+    const  [creatResolve ,activityResolve]= await Promise.all([createPost(), updateLastUserActivityTime()])
+    console.log("After creating Post 2>>>");
+    console.log(user);
+    //const get = await getPost();
+    console.log("After creating post 2,LastActivityTime:"+activityResolve);
+    const dp = await deletePost();
+    console.log("Post deleted");
+    //const dp1 = await deletePost();
+    const get2= await getPost();
+    
+    
+}
+fun1();
+
+</script>
+</html>
